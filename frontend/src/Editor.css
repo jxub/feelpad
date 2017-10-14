@@ -1,0 +1,77 @@
+.Editor {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+}
+
+.Editor-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.Editor-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.Editor-title {
+  font-size: 1.5em;
+  font-family: 'Playfair Display', serif;
+}
+
+.Editor-intro {
+  font-size: large;
+}
+
+.editorWrap {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.textWrap {
+  width: 930px;
+}
+
+.resultWrap {
+  width: 930px;
+}
+
+textarea.pad {
+  width: 800px;
+  height: 750px;
+  background-color: #F8EEE0;
+  color: #243D3D;
+  outline: none;
+  resize: none;
+  font-family: 'Playfair Display', serif;
+}
+
+.feel {
+  width: 800px;
+  height: 800px;
+}
+
+.positive {
+
+}
+
+.negative {
+
+}
+
+.neutral {
+
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
