@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Markdown from 'react-remarkable';
 import removeMd from 'remove-markdown';
+// import Rotation from 'react-rotation'
 // import Rx from 'rxjs/Rx';
 // import _ from 'lodash';
 // import {Application, loader, Sprite} from 'pixi.js';
@@ -29,9 +30,9 @@ const Result = (props) => (
 
 const Header = (props) => (
   <header className="Editor-header">
-    <img src={logo} className="Editor-logo" alt="logo" />
-    <div id="Editor-animation" />
+    <img className="rotatingImg" src={props.sentiment ? './' + props.sentiment + '.png' : './neutral.png'} />
     <h1 className="Editor-title">Feelpad</h1>
+    <p>The language of emotions</p>
   </header>
 );
 
@@ -124,12 +125,12 @@ class Editor extends Component {
   render() {
     return (
       <div className="Editor">
-        <Header />
+        <Header sentiment={this.state.sentiment}/>
         <div className="editorWrap">
           <div className="textWrap">
             <section>
               <label>Write here</label>
-              <button onClick={this.handleAnalyzeClick}>Analyze!</button>
+              <button className="butt" onClick={this.handleAnalyzeClick}>Analyze!</button>
               <br />
               <Text onEdit={this.handleEdit}/>
             </section>
@@ -137,7 +138,7 @@ class Editor extends Component {
           <div className="resultWrap">
             <section>
               <label>Feel here: {this.state.sentiment}</label>
-              <button onClick={this.handleCopyClick}>Download!</button>
+              <button className="butt" onClick={this.handleCopyClick}>Download!</button>
               <br />
               <div id="printResult">
                 <Result source={this.state.text}
