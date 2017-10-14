@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Markdown from 'react-remarkable';
 import removeMd from 'remove-markdown';
 // import Rx from 'rxjs/Rx';
-import _ from 'lodash';
-import {Application, loader, Sprite} from 'pixi.js';
+// import _ from 'lodash';
+// import {Application, loader, Sprite} from 'pixi.js';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import mojs from 'mo-js';
 import axios from 'axios';
 import logo from './logo.svg';
@@ -11,34 +13,7 @@ import './Editor.css';
 
 const NLP_SERVICE = 'http://127.0.0.1:5000/nlp';
 
-const app = new Application();
-
-// The application will create a canvas element for you that you
-// can then insert into the DOM.
-document.body.appendChild(app.view);
-document.getElementsByClassName
-// load the texture we need
-loader.add('bunny', 'bunny.png').load(function(loader, resources) {
-  // This creates a texture from a 'bunny.png' image.
-  var bunny = new Sprite(resources.bunny.texture);
-
-  // Setup the position of the bunny
-  bunny.x = app.renderer.width / 2;
-  bunny.y = app.renderer.height / 2;
-
-  // Rotate around the center
-  bunny.anchor.x = 0.5;
-  bunny.anchor.y = 0.5;
-
-  // Add the bunny to the scene we are building.
-  app.stage.addChild(bunny);
-
-  // Listen for frame updates
-  app.ticker.add(function() {
-        // each frame we spin the bunny around a bit
-      bunny.rotation += 0.01;
-  });
-});
+const emotions = ['awful', 'negative', 'neutral', 'positive', 'amazing']
 
 const Text = (props) => (
   <div className="padWrap editorWindow">
@@ -85,7 +60,8 @@ class Editor extends Component {
       sentiment: '',
     };
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleMd = this.handleMd.bind(this);
+    this.handleAnalyzeClick = this.handleAnalyzeClick.bind(this);
+    this.handleCopyClick = this.handleCopyClick.bind(this);
     this.makeSwirl = this.makeSwirl.bind(this);
   }
 
@@ -95,24 +71,42 @@ class Editor extends Component {
     });
   }
 
-  async handleMd() {
-    const plain = removeMd(this.state.text);
-    this.setState({
-      text: this.state.text,
-      plain: plain
-    });
-    let sentiment;
-    try {
-      sentiment = await axios.post('/nlp', {
-        text: this.state.plain
-      });
+  handleAnalyzeClick() {
+    const plain = removeMd(this.state.text)
+                  .replace('%0A', ' ')
+                  .replace('+', ' ')
+    axios.get(NLP_SERVICE, {
+      params: {
+        text: plain
+      }
+    })
+    .then((response) => {
+      console.log(response.data)
+      const data = JSON.parse(response.data)
+      console.log(data.sentiment)
       this.setState({
-        ...this.state,
-        sentiment: sentiment // positive | negative | neutral
+        ...this.state, // check
+        sentiment: data.sentiment, // positive | negative | neutral
+      })
+    })
+    .catch((error) => {
+      console.error(`fetching sentiment: ${error}`);
+    });
+  }
+
+  handleCopyClick() {
+    const input = document.getElementById('printResult');
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.output('dataurlnewwindow');
+        pdf.save("download.pdf");
+      })
+      .catch((error) => {
+        console.error(`creating pdf: ${error}`);
       });
-    } catch (err) {
-      console.log(`ajax error: ${err}`)
-    }
   }
 
   makeSwirl() {
@@ -123,9 +117,8 @@ class Editor extends Component {
            .replay();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     setInterval(this.makeSwirl, 1000);
-    _.throttle(this.handleMd, 10000);
   }
 
   render() {
@@ -136,16 +129,20 @@ class Editor extends Component {
           <div className="textWrap">
             <section>
               <label>Write here</label>
+              <button onClick={this.handleAnalyzeClick}>Analyze!</button>
               <br />
               <Text onEdit={this.handleEdit}/>
             </section>
           </div>
           <div className="resultWrap">
             <section>
-              <label>Feel here</label>
+              <label>Feel here: {this.state.sentiment}</label>
+              <button onClick={this.handleCopyClick}>Download!</button>
               <br />
-              <Result source={this.state.text}
-              sentiment={this.state.sentiment} />  
+              <div id="printResult">
+                <Result source={this.state.text}
+                sentiment={this.state.sentiment} />  
+              </div>
             </section>
           </div>
         </div>
@@ -155,4 +152,34 @@ class Editor extends Component {
 }
 
 export default Editor;
+
+/*
+const app = new Application();
+// The application will create a canvas element for you that you
+// can then insert into the DOM.
+document.body.appendChild(app.view);
+document.getElementsByClassName
+// load the texture we need
+loader.add('bunny', 'bunny.png').load(function(loader, resources) {
+  // This creates a texture from a 'bunny.png' image.
+  var bunny = new Sprite(resources.bunny.texture);
+
+  // Setup the position of the bunny
+  bunny.x = app.renderer.width / 2;
+  bunny.y = app.renderer.height / 2;
+
+  // Rotate around the center
+  bunny.anchor.x = 0.5;
+  bunny.anchor.y = 0.5;
+
+  // Add the bunny to the scene we are building.
+  app.stage.addChild(bunny);
+
+  // Listen for frame updates
+  app.ticker.add(function() {
+        // each frame we spin the bunny around a bit
+      bunny.rotation += 0.01;
+  });
+});
+*/
 

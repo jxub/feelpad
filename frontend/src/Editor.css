@@ -53,16 +53,28 @@ textarea.pad {
   height: 800px;
 }
 
-.positive {
-
+.feelWrap {
+  transition-duration: 2s;
 }
 
-.negative {
+.amazing {
+  background-color: red;
+}
 
+.positive {
+  background-color: orange
 }
 
 .neutral {
+  background-color: white;
+}
 
+.negative {
+  background-color: lightslategrey
+}
+
+.awful {
+  background-color: grey;
 }
 
 section {
