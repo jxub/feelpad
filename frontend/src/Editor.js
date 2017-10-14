@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import Markdown from 'react-remarkable';
 import removeMd from 'remove-markdown';
-// import Rotation from 'react-rotation'
-// import Rx from 'rxjs/Rx';
-// import _ from 'lodash';
-// import {Application, loader, Sprite} from 'pixi.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import mojs from 'mo-js';
@@ -101,9 +97,8 @@ class Editor extends Component {
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.addImage(imgData, 'JPEG', 2, 0);
         pdf.output('dataurlnewwindow');
-        pdf.save("download.pdf");
       })
       .catch((error) => {
         console.error(`creating pdf: ${error}`);
