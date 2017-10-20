@@ -1,0 +1,90 @@
+.Editor {
+  text-align: center;
+}
+
+.Editor-title {
+  font-size: 1.5em;
+}
+
+.Editor-intro {
+  font-size: large;
+}
+
+.Editor-body {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.Editor-text {
+  width: 50%;
+}
+
+.Editor-result {
+  width: 50%;
+}
+
+.Editor-section {
+  width: 80%;
+}
+
+div#printResult {
+  width: 800px;
+  height: 750px;
+  margin-left: 61px;
+}
+
+.amazing {
+  background-color: red;
+}
+
+.positive {
+  background-color: orange
+}
+
+.neutral {
+  background-color: white;
+}
+
+.negative {
+  background-color: lightslategrey
+}
+
+.awful {
+  background-color: grey;
+}
+
+/* polyfills */
+
+button {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  padding: 15px 45px;
+  font-size: 48px;
+  font-family: "Bitter",serif;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+button:focus {
+  outline: none
+}
+
+.butt {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  margin-left: 3em;
+  margin-right: 3em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
