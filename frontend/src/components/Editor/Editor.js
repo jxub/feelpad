@@ -4,6 +4,7 @@ import html2canvas from 'html2canvas';
 import {Converter} from 'showdown';
 import jsPDF from 'jspdf';
 import axios from 'axios';
+
 import './Editor.css';
 
 import burst from './../../utils/burst';
@@ -13,11 +14,7 @@ import Result from './../Result/Result';
 
 const NLP_SERVICE = 'http://127.0.0.1:5000/nlp';
 
-const emotions = ['awful', 'negative', 'neutral', 'positive', 'amazing']
-
-
-
-
+// const emotions = ['awful', 'negative', 'neutral', 'positive', 'amazing']
 
 export default class Editor extends Component {
   constructor() {
@@ -78,7 +75,7 @@ export default class Editor extends Component {
   }
 
   handlePdf() {
-    const input = document.getElementById('printResult');
+    const input = document.getElementsByClassName('Editor-print')[0];
     html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
@@ -92,7 +89,7 @@ export default class Editor extends Component {
   }
 
   handleMd(md) {
-
+    return this.mdConverter.makeHtml(md);
   }
 
   makeBurst() {
@@ -143,7 +140,7 @@ export default class Editor extends Component {
               <label>{currentSent} feelz here</label>
               <button className="butt" onClick={this.handlePdf}>Download!</button>
               <br />
-              <div id="printResult">
+              <div className="Editor-print">
                 <Result source={currentText}
                 sentiment={currentSent} />  
               </div>

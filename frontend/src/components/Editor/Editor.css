@@ -2,14 +2,6 @@
   text-align: center;
 }
 
-.Editor-title {
-  font-size: 1.5em;
-}
-
-.Editor-intro {
-  font-size: large;
-}
-
 .Editor-body {
   display: flex;
   flex-direction: row;
@@ -28,7 +20,7 @@
   width: 80%;
 }
 
-div#printResult {
+.Editor.print {
   width: 800px;
   height: 750px;
   margin-left: 61px;
