@@ -18,7 +18,7 @@ Result.defaultProps = {
 
 Result.propTypes = {
   sentiment: PropTypes.oneOf(['awful', 'negative', 'neutral', 'positive', 'amazing']),
-  text: PropTypes.string,
+  text: PropTypes.object,
 };
 
 export default Result;

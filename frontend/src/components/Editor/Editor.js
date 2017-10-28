@@ -140,10 +140,10 @@ export default class Editor extends Component {
             <section className="Editor-section">
               <label className="Editor-explanation">
                 write here
-                <i class="em em-pencil label-em" />
+                <i className="em em-pencil label-em" />
               </label>
               <button className="butt" onKeyDown={this.handleEnter} onClick={this.handleAnalyze}>
-              <i class="em em-arrow_right_hook butt-em" />
+              <i className="em em-arrow_right_hook butt-em" />
                 Analyze!
               </button>
               <br />
@@ -154,10 +154,10 @@ export default class Editor extends Component {
             <section className="Editor-section">
               <label className="Editor-explanation">
                 {currentSent} feelz here
-                <i class="em em-heartbeat label-em" />
+                <i className="em em-heartbeat label-em" />
               </label>
               <button className="butt" onClick={this.handlePdf}>
-                <i class="em em-arrow_down butt-em" />
+                <i className="em em-arrow_down butt-em" />
                 Download!
               </button>
               <br />

@@ -2,6 +2,8 @@
 
 .Result-markdown {
     padding-top: 0px;
+    padding-left: 14px;
+    padding-right: 14px;
 }
 
 .Result-text {
@@ -11,3 +13,10 @@
 .Result {
     transition-duration: 2s;
 }
+
+@media screen and (min-width: 900px) {
+    .Result-markdown {
+        min-height: 30rem;
+    }    
+}
+  

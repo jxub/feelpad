@@ -1,8 +1,26 @@
+.Editor {
+  z-index: 9999; 
+  width: 100%; 
+  height: 100%; 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+}
+
+.Editor-body {
+  height: 100%
+}
+
 @media screen and (min-width: 900px) {
   .Editor-text, .Editor-result {
     display: inline-block;
     vertical-align: top;
     width: 50%;
+    height: 100%;
+  }
+
+  .Editor-section {
+    height: 100%;
   }
 }
 
@@ -50,31 +68,6 @@
   height:auto;
   font-family: 'Open-Sans', sans-serif;
 }
-
-#container04 > .inner {
-	text-align: center;
-	padding: 0.75rem 0rem;
-	width: 100%;
-	background-color: transparent;
-	border-style: solid;
-	border-color: #333333;
-	border-width: 2px;
-	box-shadow: 0rem 0.875rem 3.625rem 0rem #B0A7A7;
-	border-radius: 0.5rem;
-	/* display: -moz-inline-flex; */
-	/* display: -webkit-inline-flex; */
-	/* display: -ms-inline-flex; */
-	display: inline-flex;
-	/* -moz-flex-wrap: wrap; */
-	/* -webkit-flex-wrap: wrap; */
-	/* -ms-flex-wrap: wrap; */
-	flex-wrap: wrap;
-	/* -moz-align-items: center; */
-	/* -webkit-align-items: center; */
-	/* -ms-align-items: center; */
-	align-items: center;
-}
-
 
 /*
 .Editor {

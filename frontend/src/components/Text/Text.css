@@ -1,28 +1,10 @@
-/*
 .Text-textarea {
-    width: 796px;
-    height: 750px;
-    background-color: #FFFFFF;
-    color: #243D3D;
-    outline: none;
-    resize: none;
-    border: 5px solid orange;
-}*/
-/*
-.Text-textarea {
-    appearance: none;
-    background-color: transparent;
-    border: .1rem solid #0400FF;
-    border-radius: none;
-    box-shadow: none;
-    box-sizing: inherit;
-    height: 3.8rem;
-    padding: .6rem 1.0rem;
-    width: 100%;
-    min-height: 6.5rem
-}*/
-
-.Text-textarea {
-    padding: 5px;
+    padding: 14px 14px;
     font-family: 'Open-Sans', sans-serif;
+}
+
+@media screen and (min-width: 900px) {
+    .Text-textarea {
+        min-height: 29rem;
+    }    
 }

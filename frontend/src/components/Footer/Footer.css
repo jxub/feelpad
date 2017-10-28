@@ -1,4 +1,24 @@
 .Footer {
     text-align: center;
-    margin-bottom: 2rem;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    position: absolute;
+}
+
+@media screen and (min-width: 900px) {
+    .Footer {
+        position: absolute;
+        bottom: 1rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .Footer {
+        top: 200px;
+    }
+}
+
+.Footer-link {
+    text-decoration: none;
 }
