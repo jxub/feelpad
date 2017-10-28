@@ -8,6 +8,7 @@ import axios from 'axios';
 import './Editor.css';
 
 import burst from './../../utils/burst';
+import randomRng from './../../utils/utils';
 import Text from './../Text/Text';
 import Header from './../Header/Header';
 import Result from './../Result/Result';
@@ -105,8 +106,13 @@ export default class Editor extends Component {
   }
 
   makeBurst() {
-    const xCoord = Math.random() * (1600 - 200) + 200;
-    const yCoord = Math.random() * (170 - 20) + 20;
+    const [x, y] = [window.innerWidth, window.innerHeight];
+    console.log(x, y)
+    const [xMax, xMin] =  [x * 0.9, x * 0.1];
+    const [yMax, yMin] =  [200, 10];
+    const xCoord = randomRng(xMin, xMax);
+    const yCoord = randomRng(yMin, yMax);
+    console.log(xCoord, yCoord)
     return burst
       .tune({ x: xCoord, y:  yCoord })
       .replay();

@@ -25,8 +25,19 @@
     -webkit-animation:spin 4s linear infinite;
     -moz-animation:spin 4s linear infinite;
     animation:spin 4s linear infinite;
-    width: 5%;
     height: auto;
+}
+
+@media screen and (min-width: 900px) {
+    .Header-image {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .Header-image {
+        width: 60px;
+    }
 }
 
 @-moz-keyframes spin {

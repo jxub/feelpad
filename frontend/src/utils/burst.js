@@ -5,6 +5,7 @@ export default new mojs.Burst({
     top:      0,
     radius:   { 4: 19 },
     angle:    45,
+    className: 'Editor-burst',
     children: {
       shape:            'line',
       radius:           3,
