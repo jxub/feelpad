@@ -1,0 +1,29 @@
+Arguments: 
+  /home/jxub/.nvm/versions/node/v8.4.0/bin/node /usr/share/yarn/bin/yarn.js add redux
+
+PATH: 
+  /home/jxub/.nvm/versions/node/v8.4.0/bin:/home/jxub/.cargo/bin:/home/jxub/bin:/home/jxub/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/go-1.9/bin:/bin:/home/jxub/projects/go/bin
+
+Yarn version: 
+  1.0.1
+
+Node version: 
+  8.4.0
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com:443
+      at Object._errnoException (util.js:1041:11)
+      at errnoException (dns.js:58:15)
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)

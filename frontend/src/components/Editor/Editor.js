@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import removeMd from 'remove-markdown';
 import html2canvas from 'html2canvas';
-import {Converter} from 'showdown';
+import { Converter } from 'showdown';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 
@@ -11,15 +11,15 @@ import burst from './../../utils/burst';
 import Text from './../Text/Text';
 import Header from './../Header/Header';
 import Result from './../Result/Result';
+import Footer from './../Footer/Footer';
 
 const NLP_SERVICE = 'http://127.0.0.1:5000/nlp';
 
-// const emotions = ['awful', 'negative', 'neutral', 'positive', 'amazing']
 
 export default class Editor extends Component {
   constructor() {
     super();
-    
+
     this.state = {
       sentHistory: [],
       textHistory: [],
@@ -27,51 +27,62 @@ export default class Editor extends Component {
     };
 
     this.mdConverter = new Converter();
-    
+
     this.handleEdit = this.handleEdit.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
     this.handleAnalyze = this.handleAnalyze.bind(this);
     this.handlePdf = this.handlePdf.bind(this);
+    this.handleMd = this.handleMd.bind(this);
     this.makeBurst = this.makeBurst.bind(this);
     this.undoText = this.undoText.bind(this);
     this.redoText = this.redoText.bind(this);
+  }
+
+
+  componentDidMount() {
+    setInterval(this.makeBurst, 1000);
   }
 
   handleEdit(text) {
     this.setState({
       ...this.state,
       textHistory: [...this.state.textHistory, text],
-      currentText: this.state.currentText + 1
+      currentText: this.state.currentText + 1,
     });
   }
 
   handleSave() {
-    return;
+    return this.state.textHistory; // change
+  }
+
+  handleEnter(event) {
+    if(event.keyCode === 13) return this.handleAnalyze;
   }
 
   handleAnalyze() {
     const [currentText] = this.state.textHistory.slice(-1);
-    console.log(`CurrentText: ${JSON.stringify(currentText)}`)
+    console.log(`CurrentText: ${JSON.stringify(currentText)}`);
     const plain = removeMd(currentText)
-                  .replace('%0A', ' ')
-                  .replace('+', ' ')
+      .replace('%0A', ' ')
+      .replace('+', ' ');
     axios.get(NLP_SERVICE, {
       params: {
-        text: plain
-      }
+        text: plain,
+      },
     })
-    .then((response) => {
-      console.log(response.data)
-      const data = JSON.parse(response.data)
-      console.log(data.sentiment)
-      this.setState({
-        ...this.state,
-        sentHistory: [...this.state.sentHistory, data.sentiment],
+      .then((response) => {
+        console.log(response.data);
+        const data = JSON.parse(response.data);
+        console.log(data.sentiment);
+        this.setState({
+          ...this.state,
+          sentHistory: [...this.state.sentHistory, data.sentiment],
+        });
       })
-    })
-    .catch((error) => {
-      console.error(`fetching sentiment: ${error}`);
-    });
+      .catch((error) => {
+        console.error(`fetching sentiment: ${error}`);
+      });
   }
 
   handlePdf() {
@@ -89,65 +100,78 @@ export default class Editor extends Component {
   }
 
   handleMd(md) {
-    return this.mdConverter.makeHtml(md);
+    const html = this.mdConverter.makeHtml(md);
+    return {__html: html};
   }
 
   makeBurst() {
     const xCoord = Math.random() * (1600 - 200) + 200;
     const yCoord = Math.random() * (170 - 20) + 20;
     return burst
-           .tune({ x: xCoord, y:  yCoord })
-           .replay();
-  }
-
-  componentDidMount() {
-    setInterval(this.makeBurst, 1000);
+      .tune({ x: xCoord, y:  yCoord })
+      .replay();
   }
 
   undoText() {
     this.setState({
       ...this.state,
       currentText: this.state.currentText - 1,
-    })
+    });
   }
 
   redoText() {
     this.setState({
       ...this.state,
       currentText: this.state.currentText + 1,
-    })
+    });
   }
 
   render() {
-    console.log(`state ${JSON.stringify(this.state)}`)
+    console.log(`state ${JSON.stringify(this.state)}`);
     const now = this.state.currentText - 1;
-    const currentText = this.state.textHistory[now]
-    const [currentSent] = this.state.sentHistory.slice(-1) || ['neutral'];  
+    const currentText = this.handleMd(this.state.textHistory[now]);
+    console.log(`currentText ${JSON.stringify(currentText)}`);
+    const [currentSent] = this.state.sentHistory.slice(-1);
     return (
       <div className="Editor">
-        <Header sentiment={currentSent}/>
+        <Header sentiment={currentSent} />
         <div className="Editor-body">
           <div className="Editor-text">
             <section className="Editor-section">
-              <label>write here</label>
-              <button className="butt" onClick={this.handleAnalyze}>Analyze!</button>
+              <label className="Editor-explanation">
+                write here
+                <i class="em em-pencil label-em" />
+              </label>
+              <button className="butt" onKeyDown={this.handleEnter} onClick={this.handleAnalyze}>
+              <i class="em em-arrow_right_hook butt-em" />
+                Analyze!
+              </button>
               <br />
-              <Text onEdit={this.handleEdit}/>
+              <Text onEdit={this.handleEdit} />
             </section>
           </div>
           <div className="Editor-result">
             <section className="Editor-section">
-              <label>{currentSent} feelz here</label>
-              <button className="butt" onClick={this.handlePdf}>Download!</button>
+              <label className="Editor-explanation">
+                {currentSent} feelz here
+                <i class="em em-heartbeat label-em" />
+              </label>
+              <button className="butt" onClick={this.handlePdf}>
+                <i class="em em-arrow_down butt-em" />
+                Download!
+              </button>
               <br />
               <div className="Editor-print">
-                <Result source={currentText}
-                sentiment={currentSent} />  
+                <Result
+                  text={currentText}
+                  sentiment={currentSent}
+                />
               </div>
             </section>
           </div>
         </div>
+        <Footer />
       </div>
-    )
+    );
   }
 }

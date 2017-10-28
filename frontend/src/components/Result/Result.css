@@ -1,6 +1,11 @@
+
+
 .Result-markdown {
-    width: 800px;
-    height: 800px;
+    padding-top: 0px;
+}
+
+.Result-text {
+    margin: 0px 5px;
 }
 
 .Result {

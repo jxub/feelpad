@@ -1,16 +1,25 @@
 .Header {
   background: red;
   background: linear-gradient(to bottom right, #0400FF, #FA2146);
+  height: 234px;
 }
 
-.Header-title, .Header-slug {
-    font-family: 'Sniglet', cursive;    
-    color: #FFFFFF;
+.Header-textwrap {
+    text-align: center;
 }
 
-.Header-title {
-    font-weight: 700;
+.Header-title  {
+    font-family: 'DejaVu Sans';
 }
+
+.Header-slug {
+    padding-bottom: 1rem;
+}
+
+.Header-slug, .Header-title {
+    color: white;
+}
+
 
 .Header-image {
     -webkit-animation:spin 4s linear infinite;

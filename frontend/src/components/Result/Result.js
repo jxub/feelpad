@@ -1,9 +1,24 @@
 import React from 'react';
-import Markdown from 'react-remarkable';
+import PropTypes from 'prop-types';
 
 import './Result.css';
 
-export default props =>
-  <div className={"Result " + props.sentiment}> 
-    <Markdown className="Result-markdown" source={props.source} />
+const Result = props => (
+  <div className={`Result ${props.sentiment}`}>
+    <div className="Result-markdown">
+        <p className="Result-text" dangerouslySetInnerHTML={props.text} />
+    </div>
   </div>
+);
+
+Result.defaultProps = {
+  sentiment: 'neutral',
+  text: '',
+};
+
+Result.propTypes = {
+  sentiment: PropTypes.oneOf(['awful', 'negative', 'neutral', 'positive', 'amazing']),
+  text: PropTypes.string,
+};
+
+export default Result;
