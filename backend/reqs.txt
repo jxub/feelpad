@@ -12,6 +12,7 @@ Flask==0.12.2
 Flask-Cors==3.0.3
 Flask-RESTful==0.3.6
 ftfy==4.4.3
+gunicorn==19.7.1
 html5lib==0.999999999
 idna==2.6
 ipykernel==4.6.1
