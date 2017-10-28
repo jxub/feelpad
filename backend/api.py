@@ -1,9 +1,12 @@
+import os
 import json
 import random
 from textblob import TextBlob
-from flask import Flask, session, redirect, url_for, escape, request
+from flask import Flask, session, redirect, url_for, escape, request, render_template
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
+
+# template_dir = os.path.abspath('./../frontend')
 
 app = Flask(__name__)
 api = Api(app)
@@ -35,7 +38,7 @@ def sentiment_mapper(text):
     else:
         return emotions.get(0)
 
-
+# nlp api
 class NLPService(Resource):
     def get(self):
         args = parser.parse_args()
@@ -46,16 +49,6 @@ class NLPService(Resource):
     def post(self):
         return json.dumps({"error": "NLPService POST method not implemented, do a GET on /nlp"})
 
-
-class RootService(Resource):
-    def get(self):
-        return json.dumps({"error": "RootService GET method not implemented, do a POST on /nlp"})
-
-    def post(self):
-        return json.dumps({"error": "RootService POST method not implemented, do a POST on /nlp"})
-
-
-api.add_resource(RootService, '/')
 api.add_resource(NLPService, '/nlp')
 
 if __name__ == '__main__':
